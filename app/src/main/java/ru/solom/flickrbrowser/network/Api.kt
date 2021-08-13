@@ -6,7 +6,14 @@ import retrofit2.http.Query
 import ru.solom.flickrbrowser.BuildConfig
 
 interface Api {
-    @GET("rest?method=flickr.photos.search&tags=Electrolux&format=json&nojsoncallback=true&extras=media&extras=url_sq&extras=url_m")
+    @GET(
+        "rest?method=flickr.photos.search" +
+                "&tags=Electrolux" +
+                "&format=json" +
+                "&nojsoncallback=true" +
+                "&extras=media" +
+                "&extras=url_sq&extras=url_m"
+    )
     suspend fun getImages(
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("per_page") pageSize: Int = 21,
