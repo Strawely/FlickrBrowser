@@ -1,6 +1,5 @@
 package ru.solom.flickrbrowser.network
 
-import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.solom.flickrbrowser.BuildConfig
