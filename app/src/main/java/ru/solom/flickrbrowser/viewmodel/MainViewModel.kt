@@ -1,5 +1,6 @@
 package ru.solom.flickrbrowser.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,6 +36,25 @@ class MainViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun onItemClick(photo: Photo) = _state.value.list?.let { list ->
+        val oldPhotoIdx = list.indexOf(photo)
+        if (list[oldPhotoIdx].isHighlighted) savePhoto(list[oldPhotoIdx])
+        val newList = list.mapIndexed { i, photo ->
+            when {
+                i == oldPhotoIdx -> photo.changeHighlighting()
+                photo.isHighlighted -> photo.changeHighlighting()
+                else -> photo
+            }
+        }
+        _state.value = _state.value.copy(list = newList)
+    }
+
+    private fun Photo.changeHighlighting() = copy(isHighlighted = !isHighlighted)
+
+    private fun savePhoto(photo: Photo) {
+        Log.d("===", "${photo.url} saved")
     }
 }
 

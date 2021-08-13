@@ -1,6 +1,7 @@
 package ru.solom.flickrbrowser.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -16,12 +17,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import coil.imageLoader
 import coil.request.ImageRequest
 import kotlinx.coroutines.CoroutineScope
 import ru.solom.flickrbrowser.R
@@ -42,7 +46,7 @@ fun Screen(coroutineScope: CoroutineScope) = MaterialTheme {
 @Composable
 private fun ItemsList(items: List<Photo>) {
     LazyColumn {
-        items(items) { item -> Item(photo = item, { }) }
+        items(items) { item -> Item(photo = item) }
     }
 }
 
@@ -64,32 +68,55 @@ private fun BoxScope.Progress() {
 }
 
 @Composable
-private fun Item(photo: Photo, onClick: (Photo) -> Unit) {
+private fun Item(photo: Photo) {
+    val viewModel = LocalViewModel.current!!
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable { onClick(photo) },
+            .clickable { viewModel.onItemClick(photo) },
         elevation = 4.dp
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            val imageRequest = ImageRequest.Builder(LocalContext.current.applicationContext)
-                .data(photo.url)
-                .placeholder(R.drawable.ic_launcher_background)
-                .fallback(R.drawable.ic_launcher_background)
-                .build()
-            Image(
-                painter = rememberImagePainter(
-                    request = imageRequest,
-                    imageLoader = LocalContext.current.applicationContext.imageLoader
-                ),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(128.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-            Text(text = photo.title, style = MaterialTheme.typography.body2)
+        Box {
+            ItemContent(photo)
+            if (photo.isHighlighted) ItemHighlight()
         }
+
+    }
+}
+
+@Composable
+private fun BoxScope.ItemHighlight() {
+    Box(
+        modifier = Modifier
+            .matchParentSize()
+            .background(Color.Black.copy(alpha = .5f))
+    ) {
+        Image(
+            modifier = Modifier.align(Alignment.Center),
+            painter = rememberImagePainter(data = R.drawable.ic_arrow_downward),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(Color.Green)
+        )
+    }
+}
+
+@Composable
+private fun ItemContent(photo: Photo) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        val imageRequest = ImageRequest.Builder(LocalContext.current.applicationContext)
+            .data(photo.url)
+            .placeholder(R.drawable.ic_launcher_background)
+            .fallback(R.drawable.ic_launcher_background)
+            .build()
+        Image(
+            painter = rememberImagePainter(request = imageRequest),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(128.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(text = photo.title, style = MaterialTheme.typography.body2)
     }
 }

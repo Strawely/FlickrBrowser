@@ -22,6 +22,5 @@ class MainInteractor @Inject constructor(private val api: Api) : IMainInteractor
         } catch (e: Exception) {
             emit(RequestState.Failure(e))
         }
-
     }
 }
