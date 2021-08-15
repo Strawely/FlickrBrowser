@@ -11,11 +11,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.solom.flickrbrowser.network.Api
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
     @Provides
+    @Singleton
     fun provideMoshi(): Moshi {
         return Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
@@ -23,6 +25,7 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideOkHttp(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor())
@@ -30,6 +33,7 @@ class NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofit(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
@@ -39,5 +43,6 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideApi(retrofit: Retrofit) = retrofit.create(Api::class.java)
+    @Singleton
+    fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
 }

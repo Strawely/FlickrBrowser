@@ -1,5 +1,6 @@
 package ru.solom.flickrbrowser.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,29 +18,32 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
-import kotlinx.coroutines.CoroutineScope
 import ru.solom.flickrbrowser.R
 import ru.solom.flickrbrowser.interactor.Photo
+import ru.solom.flickrbrowser.util.collectEvent
 
 @Composable
-fun Screen(coroutineScope: CoroutineScope) = MaterialTheme {
-    val viewModel = LocalViewModel.current!!
+fun Screen(coroutineScope: LifecycleCoroutineScope) = MaterialTheme {
+    val viewModel = LocalViewModel.current
     val state = viewModel.state.collectAsState(coroutineScope.coroutineContext)
     val stateValue = state.value
+    val context = LocalContext.current
     Box {
         if (stateValue.loading) Progress()
         if (stateValue.error != null) Error(error = stateValue.error)
         if (stateValue.list != null) ItemsList(items = stateValue.list)
+    }
+    viewModel.fileEvents.collectEvent(coroutineScope) { msgRes ->
+        Toast.makeText(context, msgRes, Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -69,7 +73,7 @@ private fun BoxScope.Progress() {
 
 @Composable
 private fun Item(photo: Photo) {
-    val viewModel = LocalViewModel.current!!
+    val viewModel = LocalViewModel.current
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -81,7 +85,6 @@ private fun Item(photo: Photo) {
             ItemContent(photo)
             if (photo.isHighlighted) ItemHighlight()
         }
-
     }
 }
 

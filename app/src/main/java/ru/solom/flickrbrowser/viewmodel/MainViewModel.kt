@@ -1,6 +1,7 @@
 package ru.solom.flickrbrowser.viewmodel
 
-import android.util.Log
+import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,18 +9,28 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ru.solom.flickrbrowser.file.IFileHandler
+import ru.solom.flickrbrowser.file.IFileHandlerFactory
 import ru.solom.flickrbrowser.interactor.IMainInteractor
 import ru.solom.flickrbrowser.interactor.Photo
+import ru.solom.flickrbrowser.interactor.Photo.Companion.toPhotoForSave
+import ru.solom.flickrbrowser.util.Event
 import ru.solom.flickrbrowser.util.RequestState
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val interactor: IMainInteractor
+    private val interactor: IMainInteractor,
+    private val fileHandlerFactory: IFileHandlerFactory
 ) : ViewModel() {
+
+    private var fileHandler: IFileHandler? = null
 
     private val _state = MutableStateFlow(MainState())
     val state = _state.asStateFlow()
+
+    private val _fileEvents = MutableStateFlow<Event<@StringRes Int>?>(null)
+    val fileEvents = _fileEvents.asStateFlow()
 
     fun update() {
         viewModelScope.launch {
@@ -51,10 +62,19 @@ class MainViewModel @Inject constructor(
         _state.value = _state.value.copy(list = newList)
     }
 
+    fun onPhotoFileCreated(uri: Uri) {
+        viewModelScope.launch { fileHandler?.saveFile(uri) }
+    }
+
     private fun Photo.changeHighlighting() = copy(isHighlighted = !isHighlighted)
 
     private fun savePhoto(photo: Photo) {
-        Log.d("===", "${photo.url} saved")
+        fileHandler = fileHandlerFactory.create(photo.toPhotoForSave()).apply {
+            initPhotoSaving()
+            viewModelScope.launch {
+                fileEvents.collect { _fileEvents.value = it }
+            }
+        }
     }
 }
 

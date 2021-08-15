@@ -1,5 +1,6 @@
 package ru.solom.flickrbrowser.interactor
 
+import ru.solom.flickrbrowser.file.PhotoForSave
 import ru.solom.flickrbrowser.network.PhotoDto
 
 data class Photo(
@@ -12,5 +13,7 @@ data class Photo(
             title = dto.title,
             url = dto.url
         )
+
+        fun Photo.toPhotoForSave() = PhotoForSave(name = title, url = url)
     }
 }
