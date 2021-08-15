@@ -23,8 +23,8 @@ Screenshots:
 
 ###### Main screen
 
-![Main screen](/screenshots/1.png)
+![Main screen](/screenshots/first.png)
 
 ###### Highlighted photo
 
-![Highlighted photo](/screenshots/2.png)
+![Highlighted photo](/screenshots/second.png)
