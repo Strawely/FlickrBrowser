@@ -20,5 +20,11 @@ Tech stack:
 * Coil
 
 Screenshots:
+
+###### Main screen
+
 ![Main screen](/screenshots/1.png)
+
+###### Highlighted photo
+
 ![Highlighted photo](/screenshots/2.png)
