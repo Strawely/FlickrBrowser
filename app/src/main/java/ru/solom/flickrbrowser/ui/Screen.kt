@@ -28,7 +28,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import ru.solom.flickrbrowser.R
-import ru.solom.flickrbrowser.interactor.Photo
+import ru.solom.flickrbrowser.core.Photo
 import ru.solom.flickrbrowser.util.collectEvent
 
 @Composable

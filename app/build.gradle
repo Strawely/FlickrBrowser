@@ -20,12 +20,12 @@ def apikeyProperties() {
 }
 
 android {
-    compileSdk 30
+    compileSdk sdkVersions.compile
 
     defaultConfig {
         applicationId "ru.solom.flickrbrowser"
-        minSdk 21
-        targetSdk 30
+        minSdk sdkVersions.min
+        targetSdk sdkVersions.target
         versionCode 1
         versionName "1.0"
 
@@ -36,6 +36,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", apikey
         }
 
         debug {
@@ -60,6 +61,8 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
+    implementation project(":data")
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'

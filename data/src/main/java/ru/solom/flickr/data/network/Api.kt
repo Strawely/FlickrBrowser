@@ -1,8 +1,7 @@
-package ru.solom.flickrbrowser.network
+package ru.solom.flickr.data.network
 
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.solom.flickrbrowser.BuildConfig
 
 interface Api {
     @GET(
@@ -14,8 +13,13 @@ interface Api {
                 "&extras=url_sq&extras=url_m"
     )
     suspend fun getImages(
-        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
-        @Query("per_page") pageSize: Int = 21,
-        @Query("page") pageNum: Int = 1
+        @Query("api_key") apiKey: String,
+        @Query("per_page") pageSize: Int = DEFAULT_PAGE_SIZE,
+        @Query("page") pageNum: Int = START_PAGE,
+        @Query("tags") tag: String = ELECTROLUX_TAG
     ): PhotosDto
 }
+
+private const val DEFAULT_PAGE_SIZE = 21
+private const val START_PAGE = 1
+private const val ELECTROLUX_TAG = "Electrolux"

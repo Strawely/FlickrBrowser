@@ -6,22 +6,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.solom.flickrbrowser.ActivityProvider
 import ru.solom.flickrbrowser.R
+import ru.solom.flickrbrowser.core.Event
+import ru.solom.flickrbrowser.core.PhotoForSave
+import ru.solom.flickrbrowser.core.file.IFileHandler
 import ru.solom.flickrbrowser.ui.FileActivity
-import ru.solom.flickrbrowser.util.Event
-
-interface IFileHandler {
-    /**
-     * indicates events of file saving, `true` means successful saving `false` mean some errors
-     */
-    val fileEvents: StateFlow<Event<Int>?>
-    fun saveFile(uri: Uri)
-    fun initPhotoSaving()
-}
 
 class FileHandler(
     private val activityProvider: ActivityProvider,
@@ -68,14 +60,5 @@ class FileHandler(
         }
     }
 }
-
-/*
-in so small project it may be redundant to create separate entities for different levels of Clean,
-i use it only for show, that it must be used in real production projects
-*/
-data class PhotoForSave(
-    val name: String,
-    val url: String
-)
 
 private const val DEFAULT_BUFFER = 4 * 1024

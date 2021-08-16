@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ru.solom.flickrbrowser.network.Api
 import javax.inject.Singleton
 
 @Module
@@ -38,11 +37,9 @@ class NetworkModule {
         return Retrofit.Builder()
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .baseUrl("https://api.flickr.com/services/")
+            .baseUrl(BASE_URL)
             .build()
     }
-
-    @Provides
-    @Singleton
-    fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
 }
+
+private const val BASE_URL = "https://api.flickr.com/services/"

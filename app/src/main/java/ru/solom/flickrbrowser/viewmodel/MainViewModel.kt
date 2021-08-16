@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.solom.flickrbrowser.file.IFileHandler
-import ru.solom.flickrbrowser.file.IFileHandlerFactory
-import ru.solom.flickrbrowser.interactor.IMainInteractor
-import ru.solom.flickrbrowser.interactor.Photo
-import ru.solom.flickrbrowser.interactor.Photo.Companion.toPhotoForSave
-import ru.solom.flickrbrowser.util.Event
-import ru.solom.flickrbrowser.util.RequestState
+import ru.solom.flickrbrowser.core.Event
+import ru.solom.flickrbrowser.core.IMainInteractor
+import ru.solom.flickrbrowser.core.Photo
+import ru.solom.flickrbrowser.core.Photo.Companion.toPhotoForSave
+import ru.solom.flickrbrowser.core.file.IFileHandler
+import ru.solom.flickrbrowser.core.file.IFileHandlerFactory
+import ru.solom.flickrbrowser.core.network.RequestState
 import javax.inject.Inject
 
 @HiltViewModel

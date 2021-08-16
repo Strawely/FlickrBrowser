@@ -6,9 +6,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import ru.solom.flickrbrowser.core.file.IFileHandlerFactory
 import ru.solom.flickrbrowser.file.FileApi
 import ru.solom.flickrbrowser.file.FileHandlerFactory
-import ru.solom.flickrbrowser.file.IFileHandlerFactory
 import javax.inject.Singleton
 
 @Module
