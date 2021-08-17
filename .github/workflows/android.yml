@@ -19,5 +19,12 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Build APK
+      run:  |
+        ./gradlew assembleRelease
+        ./gradlew bundleRelease
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: FlickrBrowser.apk
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
