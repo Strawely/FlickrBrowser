@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser
+package ru.solom.flickrbrowser.core
 
 import androidx.appcompat.app.AppCompatActivity
 

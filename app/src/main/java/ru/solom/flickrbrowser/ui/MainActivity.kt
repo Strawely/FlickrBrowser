@@ -2,7 +2,6 @@ package ru.solom.flickrbrowser.ui
 
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.CompositionLocalProvider
@@ -11,6 +10,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ru.solom.flickrbrowser.App
+import ru.solom.flickrbrowser.ImageFileActivityContract
 import ru.solom.flickrbrowser.viewmodel.MainViewModel
 
 interface FileActivity {
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), FileActivity {
                 }
             }
         })
-        fileCreateLauncher = registerForActivityResult(CreateDocument()) { uri ->
+        fileCreateLauncher = registerForActivityResult(ImageFileActivityContract()) { uri ->
             viewModel.onPhotoFileCreated(uri)
         }
         viewModel.update()
