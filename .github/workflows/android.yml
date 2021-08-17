@@ -21,10 +21,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build APK
       run:  |
-        ./gradlew assembleRelease
-        ./gradlew bundleRelease
+        ./gradlew assembleDebug
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
         name: FlickrBrowser.apk
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
