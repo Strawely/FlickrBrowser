@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.solom.flickr.data.file.FileApi
 import ru.solom.flickrbrowser.ActivityProvider
 import ru.solom.flickrbrowser.R
 import ru.solom.flickrbrowser.core.Event

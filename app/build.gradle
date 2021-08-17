@@ -72,9 +72,6 @@ dependencies {
 
     implementation deps.squareup.moshi
     implementation deps.squareup.retrofit2
-    implementation deps.squareup.moshi_converter
-    implementation deps.squareup.moshi_kotlin
-    implementation deps.squareup.logging_interceptor
 
     implementation deps.google.hilt
     kapt deps.google.hilt_kapt

@@ -1,4 +1,4 @@
-package ru.solom.flickr.data.network.di
+package ru.solom.flickr.data.di
 
 import dagger.Binds
 import dagger.Module

@@ -6,7 +6,6 @@ import retrofit2.http.Query
 interface Api {
     @GET(
         "rest?method=flickr.photos.search" +
-                "&tags=Electrolux" +
                 "&format=json" +
                 "&nojsoncallback=true" +
                 "&extras=media" +
