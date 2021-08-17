@@ -9,6 +9,7 @@ import coil.util.CoilUtils
 import coil.util.DebugLogger
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
+import ru.solom.flickrbrowser.core.ActivityProvider
 import javax.inject.Inject
 
 @HiltAndroidApp

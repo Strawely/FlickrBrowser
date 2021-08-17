@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.solom.flickrbrowser.ActivityProvider
+import ru.solom.flickrbrowser.core.ActivityProvider
 import javax.inject.Singleton
 
 @Module
