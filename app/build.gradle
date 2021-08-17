@@ -7,8 +7,7 @@ plugins {
 
 apply from: "${rootDir}/gradle/dependencies.gradle"
 
-def properties = apikeyProperties()
-def apikey = properties['apikey']
+def apikey = getApiKeyFromProps()
 
 def apikeyProperties() {
     def apikeyFile = new File("${rootDir}/apikey.properties")
@@ -17,6 +16,15 @@ def apikeyProperties() {
         apikeyProps.load(new FileInputStream(apikeyFile))
     }
     return apikeyProps
+}
+
+def getApiKeyFromProps() {
+    def properties = apikeyProperties()
+    if (properties['apikey'] != null) {
+        return properties['apikey']
+    } else {
+        return "null"
+    }
 }
 
 android {
