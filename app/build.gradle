@@ -23,7 +23,12 @@ def getApiKeyFromProps() {
     if (properties['apikey'] != null) {
         return properties['apikey']
     } else {
-        return "null"
+        def systemApiKey = System.getenv("API_KEY")
+        if (systemApiKey != null) {
+            return systemApiKey
+        } else {
+            return "null"
+        }
     }
 }
 
