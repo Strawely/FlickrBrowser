@@ -19,12 +19,13 @@ Tech stack:
 * Retrofit
 * Coil
 
-Project divided in 3 module: [:core], [:data], [:app]
+Project divided in 4 modules: [:core], [:data], [:app], [:main]
 
 * :core - common interfaces to connect other modules
 * :data - encapsulates work with data (now only with network, but in future in will be good to put
   here use-cases for file saving)
-* :app - user interface and file saving logic :(
+* :app - used for holding App class for Hilt
+* :main - user interface and file saving logic :(
 
 Screenshots:
 
