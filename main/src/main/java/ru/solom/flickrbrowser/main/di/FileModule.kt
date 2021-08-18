@@ -1,11 +1,11 @@
-package ru.solom.flickr.data.di
+package ru.solom.flickrbrowser.main.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import ru.solom.flickr.data.file.FileApi
+import ru.solom.flickrbrowser.main.file.FileApi
 import javax.inject.Singleton
 
 @Module

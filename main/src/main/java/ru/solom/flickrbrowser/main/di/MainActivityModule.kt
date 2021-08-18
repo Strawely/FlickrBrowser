@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.di
+package ru.solom.flickrbrowser.main.di
 
 import android.content.Context
 import dagger.Module

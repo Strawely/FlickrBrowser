@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.ui
+package ru.solom.flickrbrowser.main.ui
 
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
@@ -9,9 +9,10 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import ru.solom.flickrbrowser.App
-import ru.solom.flickrbrowser.ImageFileActivityContract
-import ru.solom.flickrbrowser.viewmodel.MainViewModel
+import ru.solom.flickrbrowser.core.ActivityProvider
+import ru.solom.flickrbrowser.main.ImageFileActivityContract
+import ru.solom.flickrbrowser.main.Screen
+import ru.solom.flickrbrowser.main.viewmodel.MainViewModel
 
 interface FileActivity {
     val fileCreateLauncher: ActivityResultLauncher<String>?
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), FileActivity {
         private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as App).activity = this
+        (application as ActivityProvider).currentActivity = this
         super.onCreate(savedInstanceState)
         setContentView(ComposeView(this).apply {
             setContent {
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), FileActivity {
     override fun onStop() {
         super.onStop()
         if (isFinishing) {
-            (application as App).activity = null
+            (application as ActivityProvider).currentActivity = null
         }
     }
 }

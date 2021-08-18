@@ -17,14 +17,13 @@ class App : Application(), ActivityProvider {
     @Inject
     lateinit var okHttpClient: OkHttpClient
 
-    internal var activity: AppCompatActivity? = null
-    override val currentActivity get() = activity
+    override var currentActivity: AppCompatActivity? = null
 
     override fun onCreate() {
         super.onCreate()
         Coil.setImageLoader {
             ImageLoader.Builder(applicationContext)
-                .availableMemoryPercentage(COIL_MEMORY_CAHCE_PERCENT)
+                .availableMemoryPercentage(COIL_MEMORY_CACHE_PERCENT)
                 .okHttpClient(
                     okHttpClient.newBuilder()
                         .cache(CoilUtils.createDefaultCache(applicationContext))
@@ -38,4 +37,4 @@ class App : Application(), ActivityProvider {
     override fun requireActivity() = currentActivity!!
 }
 
-private const val COIL_MEMORY_CAHCE_PERCENT = .25
+private const val COIL_MEMORY_CACHE_PERCENT = .25

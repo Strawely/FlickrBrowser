@@ -10,3 +10,4 @@ rootProject.name = "FlickrBrowser"
 include ':app'
 include ':data'
 include ':core'
+include ':main'

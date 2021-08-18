@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser
+package ru.solom.flickrbrowser.main
 
 import android.app.Activity
 import android.content.Context
