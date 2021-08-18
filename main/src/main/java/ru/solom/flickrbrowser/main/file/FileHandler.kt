@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.file
+package ru.solom.flickrbrowser.main.file
 
 import android.net.Uri
 import androidx.annotation.StringRes
@@ -8,13 +8,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.solom.flickr.data.file.FileApi
-import ru.solom.flickrbrowser.R
 import ru.solom.flickrbrowser.core.ActivityProvider
 import ru.solom.flickrbrowser.core.Event
 import ru.solom.flickrbrowser.core.PhotoForSave
 import ru.solom.flickrbrowser.core.file.IFileHandler
-import ru.solom.flickrbrowser.ui.FileActivity
+import ru.solom.flickrbrowser.main.R
+import ru.solom.flickrbrowser.main.ui.FileActivity
 
 class FileHandler(
     private val activityProvider: ActivityProvider,

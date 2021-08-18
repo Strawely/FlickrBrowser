@@ -15,8 +15,13 @@ android {
         targetSdk sdkVersions.target
         versionCode 1
         versionName "1.0"
+    }
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -24,6 +29,14 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose
     }
 }
 
@@ -33,14 +46,16 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation deps.androidx.appCompat
 
-    implementation deps.squareup.moshi
+    implementation deps.compose.foundation
+    implementation deps.compose.material
+
+    implementation deps.androidx.viewModelKtx
+    implementation deps.androidx.activityKtx
+
     implementation deps.squareup.retrofit2
-    implementation deps.squareup.moshi_converter
-    implementation deps.squareup.moshi_kotlin
-    implementation deps.squareup.logging_interceptor
 
     implementation deps.google.hilt
     kapt deps.google.hilt_kapt
 
-    implementation deps.coroutines
+    implementation deps.coil
 }

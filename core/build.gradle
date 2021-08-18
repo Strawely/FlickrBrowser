@@ -30,5 +30,5 @@ dependencies {
     implementation deps.androidx.appCompat
     implementation deps.squareup.moshi
     implementation deps.coroutines
-    implementation deps.androidx.activityKtx
+    implementation 'androidx.core:core-ktx:1.6.0'
 }

@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.viewmodel
+package ru.solom.flickrbrowser.main.viewmodel
 
 import android.net.Uri
 import androidx.annotation.StringRes

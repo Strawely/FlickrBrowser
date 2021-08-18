@@ -1,4 +1,4 @@
-package ru.solom.flickr.data.file
+package ru.solom.flickrbrowser.main.file
 
 import okhttp3.ResponseBody
 import retrofit2.http.GET

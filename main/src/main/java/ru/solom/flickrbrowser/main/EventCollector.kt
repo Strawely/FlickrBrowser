@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.util
+package ru.solom.flickrbrowser.main
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import kotlinx.coroutines.flow.FlowCollector
