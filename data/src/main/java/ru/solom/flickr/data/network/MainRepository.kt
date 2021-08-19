@@ -13,6 +13,7 @@ class MainRepository @Inject constructor(
 ) : IMainRepository {
     override fun getImages() = flow<PhotoDtoListState> {
         emit(RequestState.Loading())
+        // possible to move to extension function
         try {
             val photosDto = api.getImages(buildInfo.apiKey)
             val result = photosDto.photos.photo

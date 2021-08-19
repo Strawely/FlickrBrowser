@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ru.solom.flickrbrowser.core.ActivityProvider
 import ru.solom.flickrbrowser.main.ImageFileActivityContract
-import ru.solom.flickrbrowser.main.Screen
 import ru.solom.flickrbrowser.main.viewmodel.MainViewModel
 
 interface FileActivity {

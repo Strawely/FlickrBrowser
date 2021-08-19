@@ -25,8 +25,10 @@ object DataNetworkModule {
 @InstallIn(SingletonComponent::class)
 interface AbstractDataNetworkModule {
     @Binds
+    @Singleton
     fun bindMainRepository(impl: MainRepository): IMainRepository
 
     @Binds
+    @Singleton
     fun bindMainInteractor(impl: MainInteractor): IMainInteractor
 }

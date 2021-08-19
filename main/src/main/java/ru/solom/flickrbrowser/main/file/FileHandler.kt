@@ -14,13 +14,14 @@ import ru.solom.flickrbrowser.core.PhotoForSave
 import ru.solom.flickrbrowser.core.file.IFileHandler
 import ru.solom.flickrbrowser.main.R
 import ru.solom.flickrbrowser.main.ui.FileActivity
+import java.io.Closeable
 
 class FileHandler(
     private val activityProvider: ActivityProvider,
     private val fileApi: FileApi,
     private val photo: PhotoForSave
 ) : IFileHandler {
-    val activity get() = activityProvider.requireActivity()
+    private val activity get() = activityProvider.requireActivity()
 
     private val _fileEvents = MutableStateFlow<Event<@StringRes Int>?>(null)
     override val fileEvents = _fileEvents.asStateFlow()
@@ -31,15 +32,13 @@ class FileHandler(
         (activity as FileActivity).fileCreateLauncher?.launch("${photo.name}.$extension")
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
     override fun saveFile(uri: Uri) {
         job?.cancel()
         job = CoroutineScope(Dispatchers.IO).launch {
             val body = fileApi.getFile(photo.url)
-            var isSuccessful: Boolean
-            isSuccessful = false // to workaround "redundant initializer" one line above
-            body.byteStream().use { inputStream ->
-                activity.contentResolver.openOutputStream(uri).use outStream@{ outputStream ->
+            var isSuccessful = false // to workaround "redundant initializer" one line above
+            body.byteStream().use({ inputStream ->
+                activity.contentResolver.openOutputStream(uri).use(outStream@{ outputStream ->
                     if (outputStream == null) return@outStream
                     val buffer = ByteArray(DEFAULT_BUFFER)
                     var read: Int
@@ -47,9 +46,9 @@ class FileHandler(
                         outputStream.write(buffer, 0, read)
                     }
                     outputStream.flush()
-                }
+                }, outStream@{ return@launch })
                 isSuccessful = true
-            }
+            }, { return@launch })
             _fileEvents.value = Event(
                 if (isSuccessful) {
                     R.string.file_saved
@@ -57,6 +56,14 @@ class FileHandler(
                     R.string.file_save_error
                 }
             )
+        }
+    }
+
+    private inline fun <T : Closeable?, R> T.use(block: (T) -> R, catch: (e: Throwable) -> R): R {
+        return try {
+            this.use(block)
+        } catch (@Suppress("TooGenericExceptionCaught") e: Throwable) {
+            catch(e)
         }
     }
 }
