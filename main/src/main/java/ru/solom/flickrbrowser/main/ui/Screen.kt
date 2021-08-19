@@ -17,14 +17,16 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.coroutineScope
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import ru.solom.flickrbrowser.core.Photo
@@ -32,18 +34,20 @@ import ru.solom.flickrbrowser.main.R
 import ru.solom.flickrbrowser.main.util.collectEvent
 
 @Composable
-fun Screen(coroutineScope: LifecycleCoroutineScope) = MaterialTheme {
+fun Screen() = MaterialTheme {
     val viewModel = LocalViewModel.current
-    val state = viewModel.state.collectAsState(coroutineScope.coroutineContext)
-    val stateValue = state.value
+    val lifecycleContext = LocalLifecycleOwner.current.lifecycle.coroutineScope.coroutineContext
     val context = LocalContext.current
+    val state = viewModel.state.collectAsState()
     Box {
-        if (stateValue.loading) Progress()
-        if (stateValue.error != null) Error(error = stateValue.error)
-        if (stateValue.list != null) ItemsList(items = stateValue.list)
+        if (state.value.loading) Progress()
+        if (state.value.error != null) Error(error = state.value.error!!)
+        if (state.value.list != null) ItemsList(items = state.value.list!!)
     }
-    viewModel.fileEvents.collectEvent(coroutineScope) { msgRes ->
-        Toast.makeText(context, msgRes, Toast.LENGTH_SHORT).show()
+    LaunchedEffect(key1 = viewModel.fileEvents, key2 = lifecycleContext) {
+        viewModel.fileEvents.collectEvent(scope = this) { msgRes ->
+            Toast.makeText(context, msgRes, Toast.LENGTH_SHORT).show()
+        }
     }
 }
 
