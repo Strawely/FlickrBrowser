@@ -30,7 +30,7 @@ class NetworkModule {
     @Singleton
     fun provideOkHttp(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = BODY })
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
@@ -46,3 +46,4 @@ class NetworkModule {
 }
 
 private const val BASE_URL = "https://api.flickr.com/services/"
+private val loggingInterceptor = HttpLoggingInterceptor().apply { level = BODY }

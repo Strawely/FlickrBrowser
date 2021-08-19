@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">FlickrBrowser</string>
-
-    <string name="file_saved">File successfully saved</string>
-    <string name="file_save_error">Error occurred during file saving</string>
 </resources>

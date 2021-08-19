@@ -26,19 +26,18 @@ class FallibleAdapter<T>(
     private val errorAdapter: JsonAdapter<Error>
 ) : JsonAdapter<T>() {
     @FromJson
-    @Suppress("SwallowedException")
     override fun fromJson(reader: JsonReader): T? {
         val errorReader = reader.peekJson()
-        return try {
-            delegate.fromJson(reader)
+        try {
+            return delegate.fromJson(reader)
         } catch (e: JsonDataException) {
             val err = errorAdapter.fromJson(errorReader)
-            throw IllegalArgumentException(err?.message ?: e.message)
+            throw IllegalArgumentException(err?.message ?: e.message, e)
         }
     }
 
     @ToJson
-    override fun toJson(writer: JsonWriter, value: T?) {
+    override fun toJson(writer: JsonWriter, value: T?): Unit = writer.use {
         writer.jsonValue(value)
     }
 

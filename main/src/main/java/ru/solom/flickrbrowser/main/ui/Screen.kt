@@ -1,4 +1,4 @@
-package ru.solom.flickrbrowser.main
+package ru.solom.flickrbrowser.main.ui
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -28,7 +28,8 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import ru.solom.flickrbrowser.core.Photo
-import ru.solom.flickrbrowser.main.ui.LocalViewModel
+import ru.solom.flickrbrowser.main.R
+import ru.solom.flickrbrowser.main.util.collectEvent
 
 @Composable
 fun Screen(coroutineScope: LifecycleCoroutineScope) = MaterialTheme {
