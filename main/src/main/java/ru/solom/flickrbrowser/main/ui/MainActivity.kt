@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.ComposeView
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ru.solom.flickrbrowser.core.ActivityProvider
 import ru.solom.flickrbrowser.main.ImageFileActivityContract
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity(), FileActivity {
         setContentView(ComposeView(this).apply {
             setContent {
                 CompositionLocalProvider(LocalViewModel provides viewModel) {
-                    Screen(lifecycleScope)
+                    Screen()
                 }
             }
         })
